@@ -1,16 +1,17 @@
-const Searchbar = () => {
+const Searchbar = ({onSubmit, onChange, onClick}) => {
     return (
         <header className="Searchbar">
-  <form className="SearchForm">
-    <button type="submit" className="SearchForm-button">
+  <form className="SearchForm" onSubmit={onSubmit}>
+    <button type="submit" className="SearchForm-button" onClick={onClick}>
       <span className="SearchForm-button-label">Search</span>
     </button>
 
     <input
+      onChange={onChange}
       className="SearchForm-input"
       type="text"
-      autocomplete="off"
-      autofocus
+      autoComplete="off"
+      autoFocus
       placeholder="Search images and photos"
     />
   </form>

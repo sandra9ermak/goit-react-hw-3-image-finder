@@ -1,8 +1,8 @@
-const Modal = () => {
+const Modal = ({src, alt}) => {
     return (
         <div className="Overlay">
             <div className="Modal">
-                <img src="" alt="" />
+                    <img src={src} alt={alt} />
             </div>
         </div>
     )

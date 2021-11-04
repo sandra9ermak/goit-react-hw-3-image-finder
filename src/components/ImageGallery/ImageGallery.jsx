@@ -1,11 +1,11 @@
 import ImageGalleryItem from "../ImageGalleryItem/ImageGalleryItem";
 
-const ImageGallery = ({images}) => {
+const ImageGallery = ({images, onOpen, isModalOpen}) => {
     return (
         <ul className="ImageGallery">
         {images.map(item => 
-            <ImageGalleryItem src={item.webformatURL} alt={item.tags} id={item.id}></ImageGalleryItem>
-        )}
+            <ImageGalleryItem src={item.webformatURL} alt={item.tags} key={item.id} onOpen={onOpen} isModalOpen={isModalOpen}></ImageGalleryItem>
+            )}
         </ul>
     )
 }

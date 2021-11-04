@@ -1,7 +1,11 @@
-const ImageGalleryItem = ({src, alt, id}) => {
+import Modal from "../Modal/Modal";
+
+const ImageGalleryItem = ({ src, alt, isModalOpen, onOpen, ...key}) => {
     return (
-        <li className="ImageGalleryItem" key={id}>
+        <li key={key} className="ImageGalleryItem">
             <img src={src} alt={alt} className="ImageGalleryItem-image" />
+            {isModalOpen &&
+                <Modal src={src} alt={alt} onClick={onOpen}></Modal>}
         </li>
     )
 }

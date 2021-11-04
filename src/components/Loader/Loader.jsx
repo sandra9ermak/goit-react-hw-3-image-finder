@@ -10,7 +10,12 @@ const Loader = () => {
         width={100}
         timeout={3000} //3 secs
       />
-    )
+  )
 }
+// window.scrollTo({
+//   top: document.documentElement.scrollHeight,
+//   behavior: "smooth",
+// });
+
 
 export default Loader;
