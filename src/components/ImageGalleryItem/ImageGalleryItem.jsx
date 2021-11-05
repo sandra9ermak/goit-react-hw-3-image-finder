@@ -1,11 +1,11 @@
 import Modal from "../Modal/Modal";
 
-const ImageGalleryItem = ({ src, alt, isModalOpen, onOpen, ...key}) => {
+const ImageGalleryItem = ({ webformatURL, alt, isModalOpen, onOpen, largeImageURL, ...key}) => {
     return (
-        <li key={key} className="ImageGalleryItem">
-            <img src={src} alt={alt} className="ImageGalleryItem-image" />
+        <li key={key} className="ImageGalleryItem" onClick={onOpen}>
+            <img src={webformatURL} alt={alt} className="ImageGalleryItem-image" />
             {isModalOpen &&
-                <Modal src={src} alt={alt} onClick={onOpen}></Modal>}
+                <Modal key={key} src={largeImageURL} alt={alt}></Modal>}
         </li>
     )
 }

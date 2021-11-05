@@ -13,7 +13,8 @@ class App extends React.Component {
     isLoading: false,
     searchForm: "",
     inputQuery: "",
-    page: 1,
+    // page: 0,
+    page: 0,
     isModalOpen: false,
   };
 
@@ -27,36 +28,28 @@ class App extends React.Component {
       )
       .catch((err) => this.setState({ error: err }))
       .finally(() => this.setState({ isLoading: false }));
-
-    // if (this.state.images.length === 0) {
-    //   alert("Err");
-    // }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.searchForm !== prevState.searchForm) {
-      this.setState({ isLoading: true });
-      getApi(this.state.searchForm)
-        .then((hits) =>
-          this.setState({
-            images: hits,
-          })
-        )
-        .catch((err) => this.setState({ error: err }))
-        .finally(() => this.setState({ isLoading: false }));
-    }
-    if (this.state.page !== prevState.page) {
-      this.setState({ isLoading: true });
-      getApi(this.state.searchForm, this.state.page)
-        .then((hits) =>
-          this.setState((prevState) => ({
-            images: [...prevState.images, ...hits],
-          }))
-        )
-        .catch((err) => this.setState({ error: err }))
-        .finally(() => this.setState({ isLoading: false }));
+    if (
+      this.state.searchForm !== prevState.searchForm ||
+      this.state.page !== prevState.page
+    ) {
+      this.renderImages();
     }
   }
+
+  renderImages = () => {
+    this.setState({ isLoading: true });
+    getApi(this.state.searchForm, this.state.page)
+      .then((hits) =>
+        this.setState((prevState) => ({
+          images: [...prevState.images, ...hits],
+        }))
+      )
+      .catch((err) => this.setState({ error: err }))
+      .finally(() => this.setState({ isLoading: false }));
+  };
 
   handleChange = (e) => {
     this.setState({
@@ -68,36 +61,51 @@ class App extends React.Component {
     e.preventDefault();
     this.setState({
       searchForm: this.state.inputQuery,
+      page: 1,
+      images: [],
     });
   };
 
   handleButtonLoad = () => {
-    this.setState((prevState) => ({
-      page: prevState.page + 1,
-    }));
+    this.setState((prevState) => ({ page: prevState.page + 1 }));
   };
 
   openModal = () => {
-    this.setState({ isModalOpen: true });
+    // this.setState({ isModalOpen: true });
+    this.setState((prevState) => ({
+      isModalOpen: !prevState.isModalOpen,
+    }));
+  };
+
+  windowScroll = () => {
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: "smooth",
+    });
   };
 
   render() {
     return (
-      <div>
+      <div className="container">
         <Searchbar
           onSubmit={this.submitSearchForm}
           onChange={this.handleChange}
-          onClick={this.handleButtonLoad}
         ></Searchbar>
+        {/* {this.state.images.length === 0 && <h1>ERRROR</h1>} */}
         {this.state.isLoading && <Loader></Loader>}
-        {this.state.images.length && (
+        {this.state.images.length !== 0 && (
           <ImageGallery
             images={this.state.images}
             onOpen={this.openModal}
             isModalOpen={this.state.isModalOpen}
           ></ImageGallery>
         )}
-        <Button onClick={this.handleButtonLoad}></Button>
+        {this.state.images.length !== 0 && (
+          <Button
+            onClick={this.handleButtonLoad}
+            onScroll={this.windowScroll}
+          ></Button>
+        )}
       </div>
     );
   }

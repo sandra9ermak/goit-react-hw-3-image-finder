@@ -4,8 +4,10 @@ const ImageGallery = ({images, onOpen, isModalOpen}) => {
     return (
         <ul className="ImageGallery">
         {images.map(item => 
-            <ImageGalleryItem src={item.webformatURL} alt={item.tags} key={item.id} onOpen={onOpen} isModalOpen={isModalOpen}></ImageGalleryItem>
-            )}
+            <ImageGalleryItem webformatURL={item.webformatURL} alt={item.tags} key={item.id} onOpen={onOpen} isModalOpen={isModalOpen} largeImageURL={item.largeImageURL}></ImageGalleryItem>
+            // <ImageGalleryItem webformatURL={item.urlToImage} alt={item.tags} key={item.id} onOpen={onOpen} isModalOpen={isModalOpen} modalImage={item.urlToImage}></ImageGalleryItem>
+            )
+            }
         </ul>
     )
 }

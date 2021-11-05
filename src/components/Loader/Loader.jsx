@@ -2,20 +2,19 @@ import LoaderSpinner from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 const Loader = () => {
-    return (
-         <LoaderSpinner
-        type="Hearts"
-        color="Red"
-        height={100}
-        width={100}
-        timeout={3000} //3 secs
+  return (
+    <div className="loaderOverlay">
+    <div className="loaderSpiner">
+        <LoaderSpinner
+        type="ThreeDots"
+        color="#1229aa"
+        height={120}
+        width={150}
+      timeout={4000} //4 secs
       />
+      </div>
+      </div>
   )
 }
-// window.scrollTo({
-//   top: document.documentElement.scrollHeight,
-//   behavior: "smooth",
-// });
-
 
 export default Loader;

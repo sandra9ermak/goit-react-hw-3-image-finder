@@ -1,12 +1,9 @@
-const Button = ({onClick}) => {
+const Button = ({onClick, onScroll}) => {
     return (
-        <button onClick={onClick} type="button" className="Button">Load more</button>
+        <div className="button-wrapper">
+            <button onClick={onClick} type="button" className="Button" onScroll={onScroll}>Load more</button>
+        </div>
     )
 }
-
-window.scrollTo({
-  top: document.documentElement.scrollHeight,
-  behavior: "smooth",
-});
 
 export default Button;
