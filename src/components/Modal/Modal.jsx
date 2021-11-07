@@ -15,15 +15,15 @@ class Modal extends React.Component {
     }
   };
 
-  handleClickBackdrop = e => {
-    if (e.currentTarget === e.target) {
+  clickBackdrop = event => {
+    if (event.currentTarget === event.target) {
       this.props.onClick();
     }
   };
 
     render() {
         return (
-        <div className="Overlay" onClick={this.handleClickBackdrop}>
+        <div className="Overlay" onClick={this.clickBackdrop}>
             <div className="Modal">
                     <img src={this.props.modalImage.largeImageURL} alt={this.props.modalImage.tags} />
             </div>
