@@ -1,4 +1,6 @@
-const Searchbar = ({onSubmit, onChange}) => {
+import PropTypes from 'prop-types';
+
+const Searchbar = ({ onSubmit, onChange }) => {
     return (
         <header className="Searchbar">
   <form className="SearchForm" onSubmit={onSubmit}>
@@ -20,3 +22,8 @@ const Searchbar = ({onSubmit, onChange}) => {
 }
 
 export default Searchbar;
+
+Searchbar.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired
+}

@@ -1,9 +1,15 @@
-const Button = ({onClick, onScroll}) => {
+import PropTypes from 'prop-types';
+
+const Button = ({ onClick }) => {
     return (
         <div className="button-wrapper">
-            <button onClick={onClick} type="button" className="Button" onScroll={onScroll}>Load more</button>
+            <button onClick={onClick} type="button" className="Button">Load more</button>
         </div>
     )
 }
 
 export default Button;
+
+Button.propTypes = {
+    onClick: PropTypes.func.isRequired
+}

@@ -4,7 +4,9 @@ import Searchbar from "../components/Searchbar/Searchbar";
 import ImageGallery from "../components/ImageGallery/ImageGallery";
 import Button from "../components/Button/Button";
 import Loader from "../components/Loader/Loader";
+import Modal from "../components/Modal/Modal";
 import { getApi } from "../service/api";
+import Notiflix from "notiflix";
 
 class App extends React.Component {
   state = {
@@ -13,9 +15,9 @@ class App extends React.Component {
     isLoading: false,
     searchForm: "",
     inputQuery: "",
-    // page: 0,
     page: 0,
     isModalOpen: false,
+    modalImage: {},
   };
 
   componentDidMount() {
@@ -42,13 +44,24 @@ class App extends React.Component {
   renderImages = () => {
     this.setState({ isLoading: true });
     getApi(this.state.searchForm, this.state.page)
-      .then((hits) =>
+      .then((hits) => {
+        if (hits.length === 0) {
+          return Notiflix.Notify.failure(
+            `There is no results with ${this.state.searchForm.toUpperCase()} request`
+          );
+        }
         this.setState((prevState) => ({
           images: [...prevState.images, ...hits],
-        }))
-      )
+        }));
+      })
       .catch((err) => this.setState({ error: err }))
-      .finally(() => this.setState({ isLoading: false }));
+      .finally(() => {
+        window.scrollTo({
+          top: document.documentElement.scrollHeight,
+          behavior: "smooth",
+        });
+        this.setState({ isLoading: false });
+      });
   };
 
   handleChange = (e) => {
@@ -71,17 +84,14 @@ class App extends React.Component {
   };
 
   openModal = () => {
-    // this.setState({ isModalOpen: true });
     this.setState((prevState) => ({
       isModalOpen: !prevState.isModalOpen,
     }));
   };
 
-  windowScroll = () => {
-    window.scrollTo({
-      top: document.documentElement.scrollHeight,
-      behavior: "smooth",
-    });
+  showModalImg = ({ modalImage }) => {
+    this.setState({ modalImage: modalImage });
+    this.openModal();
   };
 
   render() {
@@ -91,20 +101,22 @@ class App extends React.Component {
           onSubmit={this.submitSearchForm}
           onChange={this.handleChange}
         ></Searchbar>
-        {/* {this.state.images.length === 0 && <h1>ERRROR</h1>} */}
         {this.state.isLoading && <Loader></Loader>}
         {this.state.images.length !== 0 && (
           <ImageGallery
             images={this.state.images}
-            onOpen={this.openModal}
             isModalOpen={this.state.isModalOpen}
+            showModalImg={this.showModalImg}
           ></ImageGallery>
         )}
         {this.state.images.length !== 0 && (
-          <Button
-            onClick={this.handleButtonLoad}
-            onScroll={this.windowScroll}
-          ></Button>
+          <Button onClick={this.handleButtonLoad}></Button>
+        )}
+        {this.state.isModalOpen && (
+          <Modal
+            modalImage={this.state.modalImage}
+            onClick={this.openModal}
+          ></Modal>
         )}
       </div>
     );

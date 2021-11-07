@@ -6,7 +6,7 @@ const API_KEY = "23801243-e85441bee56b02cd6046c9902";
 const setParams = (params) =>
   (axios.defaults.params = { key: API_KEY, ...params });
 
-export const getApi = (query = "everything", page = 1, safesearch = true) => {
+export const getApi = (query, page = 1, safesearch = true) => {
   setParams({
     q: query,
     image_type: "photo",
